@@ -8,12 +8,11 @@ namespace StudentManagment.Services
     public class StudentRepository : IStudentRepository
     {
         private readonly ApplicationDbContext _context;
+       
         public StudentRepository(ApplicationDbContext context)
         {
             this._context = context;
         }
-
-
         public async Task<Student> AddStudentAsync(Student student)
         {
             if (student == null) return null;

@@ -1,12 +1,15 @@
 ﻿@page "/students-list"
-@using StudentManagment.Client.Services
-@using StudentManagment.Shared.Models
-@inject NavigationManager navigation
-@inject IJSRuntime jSRuntime
+@using StudentManagment.Client.Services;
+@using StudentManagment.Shared.Models;
+@using StudentManagment.Shared.StudentRepository
+@inject NavigationManager navigation;
+@inject IJSRuntime jSRuntime;
+@inject IStudentRepository StudentService;
+
 
 <div class="container">
     <div class="row">
-        <p><a class="btn btn-success fload-end" href="">Add New Student</a></p>
+        <p><a class="btn btn-success fload-end" href="/add-student">Add New Student</a></p>
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header"></div>
@@ -24,7 +27,7 @@
                                     <th>First Name</th>
                                     <th>Middle Name</th>
                                     <th>Last Name</th>
-                                    <th>Email</th>
+                                    <th>Email Address</th>
                                     <th>Phone Number</th>
                                     <th>Edit</th>
                                     <th>Delete</th>
@@ -63,31 +66,36 @@
 
 @code {
     public List<Student> AllStudents { get; set; } = new();
+
     protected override async Task OnInitializedAsync()
     {
         await LoadAllStudents();
     }
+
+
+    public Student student = new Student();
+
     public async Task LoadAllStudents()
     {
+        // var students = await GenericService.GetAllAsync(student, "api/Student/All-Students");
         var students = await StudentService.GetAllStudentsAsync();
         AllStudents.Clear();
 
-        if(students is null)
-        {
-            return;
-        }
+        if (students is null) return;
         foreach (var student in students)
         {
             AllStudents.Add(student);
         }
     }
+
     private void EditStudent(int id)
     {
         navigation.NavigateTo($"/student/edit/{id}");
     }
-    private async Task DeleteStudent(int id)
+
+    private async Task DeleteStudent(int Id)
     {
-        var result = await StudentService.DeleteStudentAsync(id);
+        var result = await StudentService.DeleteStudentAsync(Id);
         await LoadAllStudents();
     }
 }

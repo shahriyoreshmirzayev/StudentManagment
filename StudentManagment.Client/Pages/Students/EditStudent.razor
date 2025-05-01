@@ -1,16 +1,18 @@
-﻿@page "/add-student"
-@using StudentManagment.Client.Services;
-@using StudentManagment.Shared.Models;
+﻿@page "/student/edit{id:int}"
+@using StudentManagment.Client.Services
+@using StudentManagment.Shared.Models
 @using StudentManagment.Shared.StudentRepository
-@inject NavigationManager navigation;
-@inject IJSRuntime jSRuntime;
+@inject NavigationManager navigation
+@inject IJSRuntime jSRuntime
 @inject IStudentRepository StudentService;
-<h3>Add New Student</h3>
+@rendermode InteractiveServer
+
+<h3>Update Student Details</h3>
 
 <hr />
 <div class="row">
     <div class="col-md-12">
-        <EditForm Model="studobj" OnValidSubmit="CreateStudent" FormName="addstudent">
+        <EditForm Model="studobj" OnValidSubmit="UpdateStudent" FormName="updatestudent">
             <DataAnnotationsValidator />
             <ValidationSummary />
             <div class="col-md-12">
@@ -97,7 +99,20 @@
 @code {
     [SupplyParameterFromForm]
     public Student studobj { get; set; } = new();
-    protected async Task CreateStudent()
+
+    [Parameter]
+    public int id { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadStudent();
+    }
+
+    public async Task LoadStudent()
+    {
+        studobj = await StudentService.GetStudentByIdAsync(id);
+    }
+    protected async Task UpdateStudent()
     {
         var result = await StudentService.AddStudentAsync(studobj);
         navigation.NavigateTo("/students-list");
