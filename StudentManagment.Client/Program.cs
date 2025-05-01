@@ -16,6 +16,4 @@ builder.Services.AddScoped(http => new HttpClient
 {
     BaseAddress = new Uri(builder.HostEnvironment.BaseAddress)
 });
-
-
 await builder.Build().RunAsync();
