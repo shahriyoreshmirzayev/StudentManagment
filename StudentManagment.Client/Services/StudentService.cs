@@ -11,8 +11,6 @@ namespace StudentManagment.Client.Services
         {
             this._httpClient = httpClient;
         }
-
-
         public async Task<Student> AddStudentAsync(Student student)
         {
             var newstudent = await _httpClient.PostAsJsonAsync<Student>("api/Student/Add-Student", student);
@@ -22,20 +20,9 @@ namespace StudentManagment.Client.Services
 
         public async Task<Student> DeleteStudentAsync(int studentId)
         {
-
             var student = await _httpClient.DeleteAsync("api/Student/DeleteStudent/" + studentId);
             var response = await student.Content.ReadFromJsonAsync<Student>();
             return response;
-
-            //throw new NotImplementedException();
-
-            //var student = await _context.Students.Where(x => x.Id == studentId).FirstOrDefaultAsync();
-            //if (student == null) return null;
-
-            //_context.Students.Remove(student);
-            //await _context.SaveChangesAsync();
-
-            //return student;
         }
 
         public async Task<List<Student>> GetAllStudentsAsync()

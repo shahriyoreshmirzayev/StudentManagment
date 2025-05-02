@@ -1,4 +1,4 @@
-﻿@page "/student/edit{id:int}"
+﻿@page "/student/edit/{id:int}"
 @using StudentManagment.Client.Services
 @using StudentManagment.Shared.Models
 @using StudentManagment.Shared.StudentRepository
@@ -89,7 +89,7 @@
 
                 <div class="form-group mt-4">
                     <button type="submit" class="btn btn-primary">Save Student</button>
-                    <button type="submit" @onclick="()=>Cancel()" class="btn btn-danger">Back To List</button>
+                    <button type="button" @onclick="()=>Cancel()" class="btn btn-danger">Back To List</button>
                 </div>
             </div>
         </EditForm>
@@ -114,7 +114,7 @@
     }
     protected async Task UpdateStudent()
     {
-        var result = await StudentService.AddStudentAsync(studobj);
+        var result = await StudentService.UpdateStudentAsync(studobj);
         navigation.NavigateTo("/students-list");
     }
     public void Cancel()
