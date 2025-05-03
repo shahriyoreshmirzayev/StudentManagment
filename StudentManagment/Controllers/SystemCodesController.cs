@@ -20,15 +20,12 @@ namespace StudentManagment.Controllers
         {
             _context = context;
         }
-
-        // GET: api/SystemCodes
         [HttpGet("All-SystemCodes")]
         public async Task<ActionResult<IEnumerable<SystemCode>>> GetAllSystemCodes()
         {
             return await _context.SystemCodes.ToListAsync();
         }
 
-        // GET: api/SystemCodes/5
         [HttpGet("Single-SystemCode/{id}")]
         public async Task<ActionResult<SystemCode>> GetSingleSystemCode(int id)
         {
@@ -42,8 +39,6 @@ namespace StudentManagment.Controllers
             return systemCode;
         }
 
-        // PUT: api/SystemCodes/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("Update-SystemCode/{id}")]
         public async Task<IActionResult> UpdateSingleSystemCode(int id, SystemCode systemCode)
         {
@@ -73,8 +68,6 @@ namespace StudentManagment.Controllers
             return NoContent();
         }
 
-        // POST: api/SystemCodes
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost("Add-SystemCode")]
         public async Task<ActionResult<SystemCode>> AddNewSystemCode(SystemCode systemCode)
         {
@@ -84,7 +77,6 @@ namespace StudentManagment.Controllers
             return CreatedAtAction("GetSystemCode", new { id = systemCode.Id }, systemCode);
         }
 
-        // DELETE: api/SystemCodes/5
         [HttpDelete("Delete-SystemCode/{id}")]
         public async Task<IActionResult> DeleteSystemCode(int id)
         {

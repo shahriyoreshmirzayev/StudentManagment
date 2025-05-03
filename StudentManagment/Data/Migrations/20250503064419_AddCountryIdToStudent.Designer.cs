@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using StudentManagment.Data;
@@ -11,9 +12,11 @@ using StudentManagment.Data;
 namespace StudentManagment.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250503064419_AddCountryIdToStudent")]
+    partial class AddCountryIdToStudent
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -334,6 +337,9 @@ namespace StudentManagment.Migrations
                         .HasColumnType("integer");
 
                     b.Property<int>("SystemCodeId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("SytemCodeId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");

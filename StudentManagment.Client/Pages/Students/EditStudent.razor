@@ -6,6 +6,7 @@
 @inject IJSRuntime jSRuntime
 @inject IStudentRepository StudentService;
 @inject ICountryRepository CountryService;
+@inject ISystemCodeDetailRepository SystemCodeDetailService;
 @rendermode InteractiveServer
 
 <h3>Update Student Details</h3>
@@ -17,6 +18,14 @@
             <DataAnnotationsValidator />
             <ValidationSummary />
             <div class="col-md-12">
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label">Registration No</label>
+                        <InputText for="RegistrationNo" class="form-control" @bind-Value="@studobj.RegistrationNo" />
+                        <ValidationMessage For="()=>studobj.RegistrationNo" />
+                    </div>
+                </div>
 
                 <div class="row">
                     <div class="col-md-6">
@@ -89,8 +98,33 @@
                                     <option value="@country.Name">@country.Name</option>
                                 }
                             </InputSelect>
-                            <ValidationMessage For="() => studobj.Country" />
+                            <ValidationMessage For="() => studobj.CountryId" />
                         </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label">Gender</label>
+                        <InputSelect for="GenderId" class="form-control" @bind-Value="@studobj.GenderId">
+                            <option value="">Select Gender</option>
+                            @if (Gender != null && Gender.Any())
+                            {
+                                @foreach (var sex in Gender)
+                                {
+                                    <option value="@sex.Id">@sex.Description</option>
+                                }
+                            }
+                        </InputSelect>
+                        <ValidationMessage For="()=>studobj.GenderId" />
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label">Date of Birth</label>
+                        <InputDate for="DOB" class="form-control" @bind-Value="@studobj.DOB" />
+                        <ValidationMessage For="()=>studobj.DOB" />
                     </div>
                 </div>
 
@@ -107,14 +141,14 @@
     [SupplyParameterFromForm]
     public Student studobj { get; set; } = new();
     public List<Country> Countries { get; set; } = new();
-
+    List<SystemCodeDetail> Gender = new List<SystemCodeDetail>();
     [Parameter]
     public int id { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
         Countries = await CountryService.GetAllAsync();
-
+        Gender = await SystemCodeDetailService.GetByCodeAsync("Gender");
         await LoadStudent();
     }
     
@@ -125,7 +159,7 @@
     protected async Task UpdateStudent()
     {
         var result = await StudentService.UpdateStudentAsync(studobj);
-        Countries = await CountryService.GetAllAsync();
+        // Countries = await CountryService.GetAllAsync();
 
         navigation.NavigateTo("/students-list");
     }
