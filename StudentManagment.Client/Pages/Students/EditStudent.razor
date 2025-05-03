@@ -5,6 +5,7 @@
 @inject NavigationManager navigation
 @inject IJSRuntime jSRuntime
 @inject IStudentRepository StudentService;
+@inject ICountryRepository CountryService;
 @rendermode InteractiveServer
 
 <h3>Update Student Details</h3>
@@ -81,7 +82,13 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label class="control-label">Country</label>
-                            <InputText for="Country" class="form-control" @bind-Value="studobj.Country" />
+                            <InputSelect for="Country" class="form-control" @bind-Value="studobj.Country">
+                                <option value="">Select Country</option>
+                                @foreach (var country in Countries)
+                                {
+                                    <option value="@country.Name">@country.Name</option>
+                                }
+                            </InputSelect>
                             <ValidationMessage For="() => studobj.Country" />
                         </div>
                     </div>
@@ -99,15 +106,18 @@
 @code {
     [SupplyParameterFromForm]
     public Student studobj { get; set; } = new();
+    public List<Country> Countries { get; set; } = new();
 
     [Parameter]
     public int id { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
+        Countries = await CountryService.GetAllAsync();
+
         await LoadStudent();
     }
-
+    
     public async Task LoadStudent()
     {
         studobj = await StudentService.GetStudentByIdAsync(id);
@@ -115,6 +125,8 @@
     protected async Task UpdateStudent()
     {
         var result = await StudentService.UpdateStudentAsync(studobj);
+        Countries = await CountryService.GetAllAsync();
+
         navigation.NavigateTo("/students-list");
     }
     public void Cancel()
