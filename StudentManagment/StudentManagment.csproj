@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="..\StudentManagment.Client\Pages\_Imports.razor" Link="_Imports.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\StudentManagment.Client\StudentManagment.Client.csproj" />
     <ProjectReference Include="..\StudentManagment.Shared\StudentManagment.Shared.csproj" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="8.0.15" />

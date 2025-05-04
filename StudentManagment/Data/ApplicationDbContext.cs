@@ -14,5 +14,20 @@ namespace StudentManagment.Data
         public DbSet<SystemCode> SystemCodes { get; set; }
 
         public DbSet<SystemCodeDetail> SystemCodeDetails { get; set; }
+        public DbSet<Parent> Parents { get; set; }
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            foreach(var realtionship in builder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
+            {
+                realtionship.DeleteBehavior = DeleteBehavior.Restrict;
+            }
+            base.OnModelCreating(builder);
+            builder.Entity<Student>()
+                   .HasOne(f => f.Country)
+                   .WithMany()
+                   .HasForeignKey(f => f.CountryId)
+                   .OnDelete(DeleteBehavior.Restrict);
+        }
+
     }
 }
