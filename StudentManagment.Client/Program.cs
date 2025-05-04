@@ -16,6 +16,7 @@ builder.Services.AddScoped<ISystemCodeDetailRepository, SystemCodeDetailService>
 builder.Services.AddScoped<ISystemCodeRepository, SystemCodeService>();
 builder.Services.AddScoped<IParentRepository, ParentService>();
 
+
 builder.Services.AddScoped(http => new HttpClient
 {
     BaseAddress = new Uri(builder.HostEnvironment.BaseAddress)

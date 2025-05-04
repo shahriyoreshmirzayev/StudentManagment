@@ -28,6 +28,21 @@ namespace StudentManagment.Data
                    .HasForeignKey(f => f.CountryId)
                    .OnDelete(DeleteBehavior.Restrict);
         }
+        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        {
+            foreach (var entry in ChangeTracker.Entries<Parent>())
+            {
+                if (entry.State == EntityState.Added || entry.State == EntityState.Modified)
+                {
+                    if (entry.Entity.DOB.Kind != DateTimeKind.Utc)
+                    {
+                        entry.Entity.DOB = DateTime.SpecifyKind(entry.Entity.DOB, DateTimeKind.Utc);
+                    }
+                }
+            }
+
+            return base.SaveChangesAsync(cancellationToken);
+        }
 
     }
 }
