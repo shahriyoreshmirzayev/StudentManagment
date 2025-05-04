@@ -37,8 +37,8 @@ namespace StudentManagment.Services
         public async Task<List<Parent>> GetAllAsync()
         {
             var data = await _context.Parents
-                .Include(x => x.Student)
-                .ToListAsync();
+                                     .Include(x => x.Student)
+                                     .ToListAsync();
 
             return data;
         }
