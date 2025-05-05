@@ -15,6 +15,7 @@ builder.Services.AddScoped<ICountryRepository, CountryService>();
 builder.Services.AddScoped<ISystemCodeDetailRepository, SystemCodeDetailService>();
 builder.Services.AddScoped<ISystemCodeRepository, SystemCodeService>();
 builder.Services.AddScoped<IParentRepository, ParentService>();
+builder.Services.AddScoped<ITeacherRepository, TeacherService>();
 
 
 builder.Services.AddScoped(http => new HttpClient
