@@ -15,6 +15,7 @@ namespace StudentManagment.Data
 
         public DbSet<SystemCodeDetail> SystemCodeDetails { get; set; }
         public DbSet<Parent> Parents { get; set; }
+        public DbSet<Teacher> Teachers { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             foreach(var realtionship in builder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
