@@ -48,7 +48,7 @@
 
     protected async Task CreateSubject()
     {
-        var result = SubjectService.AddAsync(subjectobj);
+        var result = await SubjectService.AddAsync(subjectobj);
         navigation.NavigateTo("/subjects-list");
     }
     public void Cancel()

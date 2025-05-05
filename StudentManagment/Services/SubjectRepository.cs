@@ -16,7 +16,7 @@ namespace StudentManagment.Services
         public async Task<Subject> AddAsync(Subject mod)
         {
             mod.CreatedById = "Macro Code";
-            mod.CreatedOn = DateTime.Now;
+            mod.CreatedOn = DateTime.UtcNow;
             if (mod == null) return null;
 
             var data = _context.Subjects.Add(mod).Entity;

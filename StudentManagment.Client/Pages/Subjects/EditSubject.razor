@@ -14,7 +14,7 @@
                 <h3 class="card-title">Update Country Details</h3>
             </div>
             <div class="card-body">
-                <EditForm Model="subjectobj" OnValidSubmit="UpdateUpdateSubject" FormName="updateCountry">
+                <EditForm Model="subjectobj" OnValidSubmit="UpdateSubject" FormName="updateSubject">
                     <DataAnnotationsValidator />
                     <ValidationSummary />
                     <div class="col-md-12">
@@ -64,9 +64,9 @@
     }
 
 
-    protected async Task UpdateUpdateSubject()
+    protected async Task UpdateSubject()
     {
-        var result = SubjectService.UpdateAsync(subjectobj);
+        var result = await SubjectService.UpdateAsync(subjectobj);
         navigation.NavigateTo("/subjects-list");
     }
     public void Cancel()
