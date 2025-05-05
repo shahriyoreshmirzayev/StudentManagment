@@ -16,11 +16,12 @@
             <DataAnnotationsValidator />
             <ValidationSummary />
             <div class="col-md-12">
-
-                <div class="form-group">
-                    <label class="control-label">Registration No</label>
-                    <InputText for="RegistrationNo" class="form-control" @bind-Value="@studobj.RegistrationNo" />
-                    <ValidationMessage For="()=>studobj.RegistrationNo" />
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label">Registration No</label>
+                        <InputText for="RegistrationNo" class="form-control" @bind-Value="@studobj.RegistrationNo" />
+                        <ValidationMessage For="()=>studobj.RegistrationNo" />
+                    </div>
                 </div>
 
                 <div class="row">
