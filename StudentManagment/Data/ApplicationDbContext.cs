@@ -16,6 +16,7 @@ namespace StudentManagment.Data
         public DbSet<Teacher> Teachers { get; set; }
         public DbSet<Department> Departments { get; set; }
         public DbSet<Book> Books { get; set; }
+        public DbSet<BookIssuance> BookIssuanceHistory { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             foreach(var realtionship in builder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))

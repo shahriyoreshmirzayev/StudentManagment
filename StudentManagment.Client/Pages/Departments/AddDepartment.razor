@@ -1,0 +1,68 @@
+﻿@page "/add-department"
+@using StudentManagment.Client.Services;
+@using StudentManagment.Shared.Models;
+@using StudentManagment.Shared.StudentRepository;
+@inject NavigationManager navigation;
+@inject IDepartmentRepository DepartmentService;
+@inject ISystemCodeDetailRepository SystemCodeDetailService;
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Add New Book</h3>
+            </div>
+            <div class="card-body">
+                <EditForm Model="department" OnValidSubmit="CreateDepartment" FormName="addDepartment">
+                    <DataAnnotationsValidator />
+                    <ValidationSummary />
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label">Department Code</label>
+                                    <InputText for="Code" class="form-control" @bind-Value="@department.Code" />
+                                    <ValidationMessage For="()=>department.Code" />
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label">Department Name</label>
+                                    <InputText for="Name" class="form-control" @bind-Value="@department.Name" />
+                                    <ValidationMessage For="()=>department.Name" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group mt-4">
+                            <button type="submit" class="btn btn-primary">Save Department</button>
+                            <button type="button" @onclick="()=>Cancel()" class="btn btn-danger">Back to List</button>
+                        </div>
+                    </div>
+                </EditForm>
+            </div>
+        </div>
+    </div>
+</div>
+@code {
+    [SupplyParameterFromForm]
+    public Department department { get; set; } = new();
+
+    // List<SystemCodeDetail> DepartmentCategories = new List<SystemCodeDetail>();
+
+    // protected override async Task OnInitializedAsync()
+    // {
+    //     DepartmentCategories = await SystemCodeDetailService.GetByCodeAsync("DepartmentCategory");
+    // }
+
+
+    protected async Task CreateDepartment()
+    {
+        var result = await DepartmentService.AddAsync(department);
+        navigation.NavigateTo("/departments-list");
+    }
+    public void Cancel()
+    {
+        navigation.NavigateTo("/departments-list");
+    }
+}
