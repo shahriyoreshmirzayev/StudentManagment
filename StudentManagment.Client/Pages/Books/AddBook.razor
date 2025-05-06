@@ -4,6 +4,7 @@
 @using StudentManagment.Shared.StudentRepository;
 @inject NavigationManager navigation;
 @inject IBookRepository BookService;
+@inject ISystemCodeDetailRepository SystemCodeDetailService;
 
 <div class="row">
     <div class="col-12">
@@ -39,6 +40,25 @@
                                 </div>
                             </div>
                         </div>
+
+                         <div class="col-md-6">
+                             <div class="form-group">
+                                 <label class="control-label">Book Category</label>
+                                 <InputSelect for="BookCategoryId" class="form-control" @bind-Value="book.BookCategoryId">
+                                     <option value="">Select Category</option>
+                                    @foreach (var category in BookCategories)
+                                     {
+                                         <option value="@category.Id">@category.Description</option>
+                                     }
+                                 </InputSelect>
+                                 <ValidationMessage For="() => book.BookCategoryId" />
+                             </div>
+                         </div>
+                        
+
+
+
+
                         <div class="form-group mt-4">
                             <button type="submit" class="btn btn-primary">Save Book</button>
                             <button type="button" @onclick="()=>Cancel()" class="btn btn-danger">Back to List</button>
@@ -52,6 +72,14 @@
 @code {
     [SupplyParameterFromForm]
     public Book book { get; set; } = new();
+
+    List<SystemCodeDetail> BookCategories = new List<SystemCodeDetail>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        BookCategories = await SystemCodeDetailService.GetByCodeAsync("BookCategory");
+    }
+
 
     protected async Task CreateBook()
     {

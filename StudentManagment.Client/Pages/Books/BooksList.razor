@@ -13,7 +13,7 @@
             </div>
             <div class="card-body">
                 <div class="row">
-                    <p><a class="btn btn-success float-end" href="/add-subject">Add New Book</a></p>
+                    <p><a class="btn btn-success float-end" href="/add-book">Add New Book</a></p>
                     <div class="col-md-12">
                         <div class="card">
                             <div class="card-header"></div>
@@ -31,6 +31,7 @@
                                                 <th>Book Name</th>
                                                 <th>Book Auther</th>
                                                 <th>No Of Copies</th>
+                                                <th>Category</th>
                                                 <th>Created By</th>
                                                 <th>Created On</th>
                                                 <th>Edit</th>
@@ -44,6 +45,7 @@
                                                     <td>@book.Name</td>
                                                     <td>@book.Auther</td>
                                                     <td>@book.NoOfCopy</td>
+                                                    <td>@book.BookCategory.Description</td>
                                                     <td>@book.CreatedById</td>
                                                     <td>@book.CreatedOn</td>
                                                     <td>

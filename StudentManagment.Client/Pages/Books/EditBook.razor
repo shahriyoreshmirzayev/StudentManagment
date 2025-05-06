@@ -6,6 +6,7 @@
 @inject IJSRuntime JsRuntime
 @rendermode InteractiveServer
 @inject IBookRepository BookService;
+@inject ISystemCodeDetailRepository SystemCodeDetailService; 
 
 <div class="row">
     <div class="col-12">
@@ -40,6 +41,21 @@
                                     <ValidationMessage For="()=>book.NoOfCopy" />
                                 </div>
                             </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label">Book Category</label>
+                                    <InputSelect for="BookCategoryId" class="form-control" @bind-Value="book.BookCategoryId">
+                                        <option value="">Select Category</option>
+                                        @foreach (var category in BookCategories)
+                                        {
+                                            <option value="@category.Id">@category.Description</option>
+                                        }
+                                    </InputSelect>
+                                    <ValidationMessage For="() => book.BookCategoryId" />
+                                </div>
+                            </div>
+
                         </div>
                         <div class="form-group mt-4">
                             <button type="submit" class="btn btn-primary">Save Book</button>
@@ -60,9 +76,12 @@
     [Parameter]
     public int id { get; set; }
 
+    
+    List<SystemCodeDetail> BookCategories = new List<SystemCodeDetail>();
 
     protected override async Task OnInitializedAsync()
     {
+        BookCategories = await SystemCodeDetailService.GetByCodeAsync("BookCategory");
         await LoadBook();
     }
     public async Task LoadBook()

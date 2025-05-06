@@ -37,6 +37,7 @@ namespace StudentManagment.Services
         public async Task<List<Book>> GetAllAsync()
         {
             var data = await _context.Books
+                .Include(x => x.BookCategory)
                 .ToListAsync();
 
             return data;
