@@ -8,18 +8,14 @@ namespace StudentManagment.Data
         : IdentityDbContext<ApplicationUser>(options)
     {
         public DbSet<Student> Students { get; set; }
-
         public DbSet<Country> Countries { get; set; }
-
         public DbSet<SystemCode> SystemCodes { get; set; }
-
         public DbSet<SystemCodeDetail> SystemCodeDetails { get; set; }
         public DbSet<Parent> Parents { get; set; }
-        public DbSet<Teacher> Teachers { get; set; }
-
         public DbSet<Subject> Subjects { get; set; }
-
-
+        public DbSet<Teacher> Teachers { get; set; }
+        public DbSet<Department> Departments { get; set; }
+        public DbSet<Book> Books { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             foreach(var realtionship in builder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))

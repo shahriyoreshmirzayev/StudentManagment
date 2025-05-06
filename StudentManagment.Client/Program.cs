@@ -17,7 +17,7 @@ builder.Services.AddScoped<ISystemCodeRepository, SystemCodeService>();
 builder.Services.AddScoped<IParentRepository, ParentService>();
 builder.Services.AddScoped<ITeacherRepository, TeacherService>();
 builder.Services.AddScoped<ISubjectRepository, SubjectService>();
-
+builder.Services.AddScoped<IBookRepository, BookService>();
 
 builder.Services.AddScoped(http => new HttpClient
 {
