@@ -84,10 +84,10 @@
     protected async Task CreateBook()
     {
         var result = await BookService.AddAsync(book);
-        navigation.NavigateTo("/book-list");
+        navigation.NavigateTo("/books-list");
     }
     public void Cancel()
     {
-        navigation.NavigateTo("/book-list");
+        navigation.NavigateTo("/books-list");
     }
 }

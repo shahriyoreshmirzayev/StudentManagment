@@ -15,11 +15,21 @@ namespace StudentManagment.Services
         }
         public async Task<Book> AddAsync(Book mod)
         {
-            if (mod == null) return null;
+            //if (mod == null) return null;
 
+            //var data = _context.Books.Add(mod).Entity;
+            //await _context.SaveChangesAsync();
+
+            //return data;
+
+
+            if (mod == null) return null;
+            // Himoya: CreatedById bo‘sh bo‘lsa, tizim nomidan yozamiz
+            if (string.IsNullOrEmpty(mod.CreatedById))
+                mod.CreatedById = "system"; // yoki istalgan default user id
+            mod.CreatedOn = DateTime.UtcNow;
             var data = _context.Books.Add(mod).Entity;
             await _context.SaveChangesAsync();
-
             return data;
         }
 
