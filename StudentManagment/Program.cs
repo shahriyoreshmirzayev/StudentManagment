@@ -48,6 +48,7 @@ builder.Services.AddScoped<ISubjectRepository, SubjectRepository>();
 builder.Services.AddScoped<IBookRepository, BookRepository>();
 //builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
+builder.Services.AddScoped<IBookIssuanceRepository, BookIssuanceRepository>();
 
 builder.Services.AddScoped(http => new HttpClient
 {

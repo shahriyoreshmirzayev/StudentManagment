@@ -1,0 +1,130 @@
+﻿@page "/add-bookissuance"
+@using StudentManagment.Client.Services;
+@using StudentManagment.Shared.Models;
+@using StudentManagment.Shared.StudentRepository;
+@inject NavigationManager navigation;
+@inject IParentRepository ParentService;
+@inject ISystemCodeDetailRepository SystemCodeDetailService;
+@inject IBookIssuanceRepository BookIssuanceService;
+@inject IStudentRepository StudentService;
+@inject IBookRepository BookService;
+
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Add New Students Parent Details</h3>
+            </div>
+            <div class="card-body">
+                <div class="col-md-12">
+                    <EditForm Model="bookIssuance" OnValidSubmit="CreateIssuance" FormName="addbookissuance">
+                        <DataAnnotationsValidator />
+                        <ValidationSummary />
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label">Issue Data</label>
+                                        <InputText class="form-control" @bind-Value="@bookIssuance.IssueDate" />
+                                        <ValidationMessage For="()=>bookIssuance.IssueDate" />
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label">Return Date</label>
+                                        <InputText for="ReturnDate" class="form-control" @bind-Value="@bookIssuance.ReturnDate" />
+                                        <ValidationMessage For="()=>bookIssuance.ReturnDate" />
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label">Class</label>
+                                        <InputSelect for="ClassId" class="form-control" @bind-Value="@bookIssuance.ClassId">
+                                            <option value="">Select Class</option>
+                                            @if (Class != null && Class.Any())
+                                            {
+                                                @foreach (var item in Class)
+                                                {
+                                                    <option value="@item.Id">@item.Description</option>
+                                                }
+                                            }
+                                        </InputSelect>
+                                        <ValidationMessage For="()=>bookIssuance.ClassId" />
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label">Student</label>
+                                        <InputSelect for="StudentId" class="form-control" @bind-Value="@bookIssuance.StudentId">
+                                            <option value="">Select Student</option>
+                                                @foreach (var student in Students)
+                                                {
+                                                    <option value="@student.Id">@student.FullName</option>
+                                                }
+                                        </InputSelect>
+                                        <ValidationMessage For="()=>bookIssuance.StudentId" />
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label">Book Type</label>
+                                        <InputSelect for="BookId" class="form-control" @bind-Value="@bookIssuance.BookId">
+                                            <option value="">Student Book Type</option>
+                                            @foreach (var type in Books)
+                                            {
+                                                <option value="@type.Id">@type.Description</option>
+                                            }
+                                        </InputSelect>
+                                        <ValidationMessage For="()=>bookIssuance.BookId" />
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label">Notes</label>
+                                        <InputTextArea class="form-control" @bind-Value="@bookIssuance.Notes" />
+                                        <ValidationMessage For="()=>bookIssuance.Notes" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group mt-4">
+                                <button type="submit" class="btn btn-primary">Save Book Issunace History</button>
+                                <button type="button" @onclick="()=>Cancel()" class="btn btn-danger">Back to List</button>
+                            </div>
+                        </div>
+                    </EditForm>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@code {
+
+    [SupplyParameterFromForm]
+    public BookIssuance bookIssuance { get; set; } = new();
+
+    List<SystemCodeDetail> Class = new List<SystemCodeDetail>();
+    List<Book> Books = new List<Book>();
+
+    List<Student> Students = new List<Student>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        Class = await SystemCodeDetailService.GetByCodeAsync("Class");
+        Books = await BookService.GetAllAsync();
+        Students = await StudentService.GetAllStudentsAsync();
+    }
+
+    protected async Task CreateIssuance()
+    {
+        var result = await BookIssuanceService.AddAsync(bookIssuance);
+        navigation.NavigateTo("/bookissuance-list");
+    }
+    public void Cancel()
+    {
+        navigation.NavigateTo("/bookissuance-list");
+    }
+}
