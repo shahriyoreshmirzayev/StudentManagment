@@ -1,13 +1,14 @@
 ﻿@page "/bookissuance/edit/{id:int}"
-@using StudentManagment.Client.Services
-@using StudentManagment.Shared.Models
-@using StudentManagment.Shared.StudentRepository
-@inject IParentRepository ParentService
-@inject IStudentRepository StudentService
-@inject ISystemCodeDetailRepository SystemCodeDetailService
+@using StudentManagment.Client.Services;
+@using StudentManagment.Shared.Models;
+@using StudentManagment.Shared.StudentRepository;
+@inject IParentRepository ParentService;
+@inject IStudentRepository StudentService;
+@inject ISystemCodeDetailRepository SystemCodeDetailService;
 @inject IBookIssuanceRepository BookIssuanceService;
 @inject IBookRepository BookService;
 @inject NavigationManager navigation;
+@inject IJSRuntime JsRuntime;
 
 <div class="row">
     <div class="col-12">
@@ -26,14 +27,14 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="control-label">Issue Data</label>
-                                            <InputText for="IssueData" class="form-control" @bind-Value="@bookIssuance.IssueDate" />
+                                            <InputDate for="IssueData" class="form-control" @bind-Value="@bookIssuance.IssueDate" />
                                             <ValidationMessage For="()=>bookIssuance.IssueDate" />
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="control-label">Return Date</label>
-                                            <InputText for="ReturnDate" class="form-control" @bind-Value="@bookIssuance.ReturnDate" />
+                                            <InputDate for="ReturnDate" class="form-control" @bind-Value="@bookIssuance.ReturnDate" />
                                             <ValidationMessage For="()=>bookIssuance.ReturnDate" />
                                         </div>
                                     </div>
@@ -75,7 +76,7 @@
                                                 <option value="">Student Book Type</option>
                                                 @foreach (var type in Books)
                                                 {
-                                                    <option value="@type.Id">@type.</option>
+                                                    <option value="@type.Id">@type.Name</option>
                                                 }
                                             </InputSelect>
                                             <ValidationMessage For="()=>bookIssuance.BookId" />
