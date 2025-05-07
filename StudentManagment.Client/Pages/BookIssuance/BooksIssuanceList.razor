@@ -47,9 +47,9 @@
                                                     <td>@issue.Id</td>
                                                     <td>@issue.IssueDate</td>
                                                     <td>@issue.ReturnDate</td>
-                                                    <td>@issue.Class.Description</td>
-                                                    <td>@issue.Student.FullName</td>
-                                                    <td>@issue.Book.Name</td>
+                                                    <td>@issue.Class?.Description</td>
+                                                    <td>@issue.Student?.FullName</td>
+                                                    <td>@issue.Book?.Name</td>
                                                     <td>
                                                         <a class="btn btn-success" href="/issue/edit/@issue.Id"> Edit </a>
                                                     </td>
@@ -91,14 +91,14 @@
             AllBooksIssunace.Add(item);
         }
     }
-    // private void EditBookIssuance(int id)
-    // {
-    //     navigation.NavigateTo($"/bookissuance/edit/{id}");
-    // }
+    private void EditBookIssuance(int id)
+    {
+        navigation.NavigateTo($"/bookissuance/edit/{id}");
+    }
 
-    // private async Task DeleteBookIssuance(int Id)
-    // {
-    //     var result = await BooksIssuanceService.DeleteAsync(Id);
-    //     await LoadAllBooksIssuance();
-    // }
+    private async Task DeleteBookIssuance(int Id)
+    {
+        var result = await BookIssuanceService.DeleteAsync(Id);
+        await LoadAllBooksIssuance();
+    }
 }

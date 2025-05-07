@@ -15,7 +15,22 @@ namespace StudentManagment.Services
         }
         public async Task<BookIssuance> AddAsync(BookIssuance mod)
         {
+            /* mod.CreatedById = "system";
+             mod.CreatedOn = DateTime.UtcNow;
+             if (mod == null) return null;
+
+             var data = _context.BookIssuanceHistory.Add(mod).Entity;
+             await _context.SaveChangesAsync();
+
+             return data;*/
             if (mod == null) return null;
+
+            mod.CreatedById = "system";
+            mod.CreatedOn = DateTime.UtcNow;
+
+            // DateTime turlarini UTC sifatida belgilash
+            mod.IssueDate = DateTime.SpecifyKind(mod.IssueDate, DateTimeKind.Utc);
+            mod.ReturnDate = DateTime.SpecifyKind(mod.ReturnDate, DateTimeKind.Utc);
 
             var data = _context.BookIssuanceHistory.Add(mod).Entity;
             await _context.SaveChangesAsync();
@@ -38,6 +53,8 @@ namespace StudentManagment.Services
         {
             var data = await _context.BookIssuanceHistory
                                      .Include(x => x.Student)
+                                     .Include(x => x.Book)
+                                     .Include(x => x.Class)
                                      .ToListAsync();
 
             return data;
