@@ -1,4 +1,4 @@
-﻿@page "/bookissuance-list"
+﻿@page "/returnbookissuance-list"
 @using StudentManagment.Shared.Models
 @using StudentManagment.Shared.StudentRepository
 @using StudentManagment.Client.Services
@@ -13,19 +13,18 @@
     <div class="col-12">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">Books Issuance History</h3>
+                <h3 class="card-title">Returned Books HIstory</h3>
             </div>
             <div class="card-body">
                 <div class="row">
-                    <p><a class="btn btn-success float-end" href="/add-bookissuance"> Issue New Book </a></p>
                     <div class="col-md-12">
                         <div class="card">
                             <div class="card-header"></div>
-                            @if (!AllBooksIssunace.Any())
+                            @if (!AllBookReturnIssunace.Any())
                             {
-                                <p><em>Loading Books Issuance History...</em></p>
+                                <p><em>Loading Books Return Issuance History...</em></p>
                             }
-                            @if (AllBooksIssunace.Any())
+                            @if (AllBookReturnIssunace.Any())
                             {
                                 <div class="card-body">
                                     <table class="table table-striped table-hover">
@@ -37,12 +36,11 @@
                                                 <th>Class Name</th>
                                                 <th>Student Name</th>
                                                 <th>Book Name</th>
-                                                <th>Edit</th>
-                                                <th>Return</th>
+                                                <th>Return Date</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach (var issue in AllBooksIssunace)
+                                            @foreach (var issue in AllBookReturnIssunace)
                                             {
                                                 <tr>
                                                     <td>@issue.Id</td>
@@ -51,16 +49,7 @@
                                                     <td>@issue.Class?.Description</td>
                                                     <td>@issue.Student?.FullName</td>
                                                     <td>@issue.Book?.Name</td>
-                                                    <td>
-                                                        <a class="btn btn-success" href="/issue/edit/@issue.Id">
-                                                            <i class="fa-solid fa-pencil"></i> Edit
-                                                        </a>
-                                                    </td>
-                                                    <td>
-                                                        <a class="btn btn-secondary" href="/return/edit/@issue.Id">
-                                                            <i class="fa-solid fa-arrow-rotate-left"></i> Return
-                                                        </a>
-                                                    </td>
+                                                    <td>@issue.ReturnDate</td>
                                                 </tr>
                                             }
                                         </tbody>
@@ -69,7 +58,7 @@
                             }
                             else
                             {
-                                <div class="alert alert-info"> There is not Books Issuance History List Availlable</div>
+                                <div class="alert alert-info"> There is not Books Return Issuance History List Availlable</div>
                             }
                         </div>
                     </div>
@@ -82,7 +71,7 @@
 
 @code {
 
-    public List<BookIssuance> AllBooksIssunace { get; set; } = new();
+    public List<BookIssuance> AllBookReturnIssunace { get; set; } = new();
 
     protected override async Task OnInitializedAsync()
     {
@@ -92,12 +81,12 @@
     public async Task LoadAllBooksIssuance()
     {
         var data = await BookIssuanceService.GetAllAsync();
-        AllBooksIssunace.Clear();
-
-        if (data is null) return;
-        foreach (var item in data)
+        var returndate = data.Where(x => x.ReturnDate != null);
+        AllBookReturnIssunace.Clear();
+        if (returndate is null) return;
+        foreach (var item in returndate)
         {
-            AllBooksIssunace.Add(item);
+            AllBookReturnIssunace.Add(item);
         }
     }
     private void EditBookIssuance(int id)

@@ -4,7 +4,8 @@
     {
         public int Id { get; set; }
         public DateTime IssueDate { get; set; }
-        public DateTime ReturnDate { get; set; }
+        public DateTime DueDate { get; set; }
+        public DateTime? ReturnDate { get; set; }
         public int ClassId { get; set; }
         public SystemCodeDetail Class { get; set; }
         public int StudentId { get; set; }

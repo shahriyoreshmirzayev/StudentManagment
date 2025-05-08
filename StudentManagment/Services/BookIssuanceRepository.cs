@@ -15,17 +15,17 @@ namespace StudentManagment.Services
         }
         public async Task<BookIssuance> AddAsync(BookIssuance mod)
         {
-            /* mod.CreatedById = "system";
-             mod.CreatedOn = DateTime.UtcNow;
-             if (mod == null) return null;
-
-             var data = _context.BookIssuanceHistory.Add(mod).Entity;
-             await _context.SaveChangesAsync();
-
-             return data;*/
+            mod.CreatedById = "system";
+            mod.CreatedOn = DateTime.UtcNow;
             if (mod == null) return null;
 
-            mod.CreatedById = "system";
+            var data = _context.BookIssuanceHistory.Add(mod).Entity;
+            await _context.SaveChangesAsync();
+
+            return data;
+            //if (mod == null) return null;
+
+           /* mod.CreatedById = "system";
             mod.CreatedOn = DateTime.UtcNow;
 
             // DateTime turlarini UTC sifatida belgilash
@@ -35,7 +35,7 @@ namespace StudentManagment.Services
             var data = _context.BookIssuanceHistory.Add(mod).Entity;
             await _context.SaveChangesAsync();
 
-            return data;
+            return data;*/
         }
 
         public async Task<BookIssuance> DeleteAsync(int id)
