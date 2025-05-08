@@ -10,13 +10,11 @@ namespace StudentManagment.Shared.StudentRepository
     public interface IBookIssuanceRepository
     {
         Task<BookIssuance> AddAsync(BookIssuance mod);
-
         Task<BookIssuance> UpdateAsync(BookIssuance mod);
-
         Task<BookIssuance> DeleteAsync(int id);
-
         Task<List<BookIssuance>> GetAllAsync();
-
         Task<BookIssuance> GetByIdAsync(int id);
+        Task<BookIssuance> ReturnUpdateAsync(BookIssuance mod);
+
     }
 }

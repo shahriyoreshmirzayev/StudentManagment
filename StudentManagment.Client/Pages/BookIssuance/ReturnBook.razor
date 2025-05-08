@@ -135,7 +135,7 @@
 
     protected async Task ReturnBookIsssuance()
     {
-        var result = await BookIssuanceService.UpdateAsync(bookIssuance);
+        var result = await BookIssuanceService.ReturnUpdateAsync(bookIssuance);
         navigation.NavigateTo("/bookissuance-list");
     }
     public void Cancel()

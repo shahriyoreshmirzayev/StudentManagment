@@ -29,6 +29,8 @@ namespace StudentManagment.Data
                    .WithMany()
                    .HasForeignKey(f => f.CountryId)
                    .OnDelete(DeleteBehavior.Restrict);
+
+
         }
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
@@ -42,7 +44,6 @@ namespace StudentManagment.Data
                     }
                 }
             }
-
             return base.SaveChangesAsync(cancellationToken);
         }
 

@@ -32,11 +32,12 @@
                                         <thead>
                                             <tr>
                                                 <th>Id</th>
+                                                <th>Book Name</th>
                                                 <th>Issue Date</th>
                                                 <th>Due Date</th>
                                                 <th>Class Name</th>
                                                 <th>Student Name</th>
-                                                <th>Book Name</th>
+                                                <th>Status</th>
                                                 <th>Edit</th>
                                                 <th>Return</th>
                                             </tr>
@@ -46,11 +47,12 @@
                                             {
                                                 <tr>
                                                     <td>@issue.Id</td>
+                                                    <td>@issue.Book?.Name</td>
                                                     <td>@issue.IssueDate</td>
                                                     <td>@issue.DueDate</td>
                                                     <td>@issue.Class?.Description</td>
                                                     <td>@issue.Student?.FullName</td>
-                                                    <td>@issue.Book?.Name</td>
+                                                    <td>@issue.Status.Code</td>
                                                     <td>
                                                         <a class="btn btn-success" href="/issue/edit/@issue.Id">
                                                             <i class="fa-solid fa-pencil"></i> Edit
@@ -92,10 +94,11 @@
     public async Task LoadAllBooksIssuance()
     {
         var data = await BookIssuanceService.GetAllAsync();
+        var issuedbooks = data.Where(x => x.Status.Code == "Issued");
         AllBooksIssunace.Clear();
 
-        if (data is null) return;
-        foreach (var item in data)
+        if (issuedbooks is null) return;
+        foreach (var item in issuedbooks)
         {
             AllBooksIssunace.Add(item);
         }

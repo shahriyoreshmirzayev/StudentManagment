@@ -15,6 +15,13 @@ namespace StudentManagment.Services
         }
         public async Task<BookIssuance> AddAsync(BookIssuance mod)
         {
+            var issuesstatus = await _context.SystemCodeDetails
+                .Include(x => x.SystemCode)
+                .Where(x => x.SystemCode.Code == "BookIssuanceStatus" && x.Code == "Issued")
+                .FirstOrDefaultAsync();
+
+
+            mod.StatusId = issuesstatus.Id;
             mod.CreatedById = "system";
             mod.CreatedOn = DateTime.UtcNow;
             if (mod == null) return null;
@@ -55,6 +62,7 @@ namespace StudentManagment.Services
                                      .Include(x => x.Student)
                                      .Include(x => x.Book)
                                      .Include(x => x.Class)
+                                     .Include(x => x.Status)
                                      .ToListAsync();
 
             return data;
@@ -72,6 +80,20 @@ namespace StudentManagment.Services
         {
             if (mod == null) return null;
 
+            var data = _context.BookIssuanceHistory.Update(mod).Entity;
+            await _context.SaveChangesAsync();
+
+            return data;
+        }
+        public async Task<BookIssuance> ReturnUpdateAsync(BookIssuance mod)
+        {
+            if (mod == null) return null;
+
+            var returnedstatus = await _context.SystemCodeDetails
+                .Include(x => x.SystemCode)
+                .Where(x => x.SystemCode.Code == "BookIssuanceStatus" && x.Code == "Returned")
+                .FirstOrDefaultAsync();
+            mod.StatusId = returnedstatus.Id;
             var data = _context.BookIssuanceHistory.Update(mod).Entity;
             await _context.SaveChangesAsync();
 

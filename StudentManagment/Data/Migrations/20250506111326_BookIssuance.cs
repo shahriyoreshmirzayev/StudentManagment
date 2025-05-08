@@ -49,7 +49,7 @@ namespace StudentManagment.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
-
+           
             migrationBuilder.CreateIndex(
                 name: "IX_BookIssuanceHistory_BookId",
                 table: "BookIssuanceHistory",

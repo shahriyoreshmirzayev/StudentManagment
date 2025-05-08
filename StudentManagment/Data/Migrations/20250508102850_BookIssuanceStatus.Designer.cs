@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using StudentManagment.Data;
@@ -11,9 +12,11 @@ using StudentManagment.Data;
 namespace StudentManagment.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250508102850_BookIssuanceStatus")]
+    partial class BookIssuanceStatus
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -251,7 +254,7 @@ namespace StudentManagment.Migrations
 
                     b.HasIndex("BookCategoryId");
 
-                    b.ToTable("Books", (string)null);
+                    b.ToTable("Books");
                 });
 
             modelBuilder.Entity("StudentManagment.Shared.Models.BookIssuance", b =>
@@ -304,7 +307,7 @@ namespace StudentManagment.Migrations
 
                     b.HasIndex("StudentId");
 
-                    b.ToTable("BookIssuanceHistory", (string)null);
+                    b.ToTable("BookIssuanceHistory");
                 });
 
             modelBuilder.Entity("StudentManagment.Shared.Models.Country", b =>
@@ -325,7 +328,7 @@ namespace StudentManagment.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Countries", (string)null);
+                    b.ToTable("Countries");
                 });
 
             modelBuilder.Entity("StudentManagment.Shared.Models.Department", b =>
@@ -353,7 +356,7 @@ namespace StudentManagment.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Departments", (string)null);
+                    b.ToTable("Departments");
                 });
 
             modelBuilder.Entity("StudentManagment.Shared.Models.Parent", b =>
@@ -408,7 +411,7 @@ namespace StudentManagment.Migrations
 
                     b.HasIndex("StudentId");
 
-                    b.ToTable("Parents", (string)null);
+                    b.ToTable("Parents");
                 });
 
             modelBuilder.Entity("StudentManagment.Shared.Models.Student", b =>
@@ -462,7 +465,7 @@ namespace StudentManagment.Migrations
 
                     b.HasIndex("GenderId");
 
-                    b.ToTable("Students", (string)null);
+                    b.ToTable("Students");
                 });
 
             modelBuilder.Entity("StudentManagment.Shared.Models.Subject", b =>
@@ -490,7 +493,7 @@ namespace StudentManagment.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Subjects", (string)null);
+                    b.ToTable("Subjects");
                 });
 
             modelBuilder.Entity("StudentManagment.Shared.Models.SystemCode", b =>
@@ -511,7 +514,7 @@ namespace StudentManagment.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("SystemCodes", (string)null);
+                    b.ToTable("SystemCodes");
                 });
 
             modelBuilder.Entity("StudentManagment.Shared.Models.SystemCodeDetail", b =>
@@ -540,7 +543,7 @@ namespace StudentManagment.Migrations
 
                     b.HasIndex("SystemCodeId");
 
-                    b.ToTable("SystemCodeDetails", (string)null);
+                    b.ToTable("SystemCodeDetails");
                 });
 
             modelBuilder.Entity("StudentManagment.Shared.Models.Teacher", b =>
@@ -607,7 +610,7 @@ namespace StudentManagment.Migrations
 
                     b.HasIndex("MaritalStatusId");
 
-                    b.ToTable("Teachers", (string)null);
+                    b.ToTable("Teachers");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

@@ -13,5 +13,7 @@
         public int BookId { get; set; }
         public Book Book { get; set; }
         public string Notes { get; set; }
+        public int StatusId { get; set; }
+        public SystemCodeDetail Status { get; set; }   
     }
 }
