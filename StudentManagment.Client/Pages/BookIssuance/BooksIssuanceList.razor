@@ -38,6 +38,7 @@
                                                 <th>Student Name</th>
                                                 <th>Book Name</th>
                                                 <th>Edit</th>
+                                                <th>Return</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -51,7 +52,14 @@
                                                     <td>@issue.Student?.FullName</td>
                                                     <td>@issue.Book?.Name</td>
                                                     <td>
-                                                        <a class="btn btn-success" href="/issue/edit/@issue.Id"> Edit </a>
+                                                        <a class="btn btn-success" href="/issue/edit/@issue.Id">
+                                                            <i class="fa-solid fa-pencil"></i> Edit
+                                                        </a>
+                                                    </td>
+                                                    <td>
+                                                        <a class="btn btn-secondary" href="/issue/return/@issue.Id">
+                                                            <i class="fa-solid fa-arrow-rotate-left"></i> Return
+                                                        </a>
                                                     </td>
                                                 </tr>
                                             }
@@ -65,6 +73,7 @@
                             }
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>

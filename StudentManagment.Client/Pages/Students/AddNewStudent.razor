@@ -84,13 +84,13 @@
                     </div>
                 </div>
 
-                @* <div class="row">
+                <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
                             <label class="control-label">Country</label>
                             <InputSelect for="Country" class="form-control" @bind-Value="studobj.Country">
                                 <option value="">Select Country</option>
-                                @foreach(var country in Countries)
+                                @foreach (var country in Countries)
                                 {
                                     <option value="@country.Name">@country.Name</option>
                                 }
@@ -98,25 +98,7 @@
                             <ValidationMessage For="() => studobj.CountryId" />
                         </div>
                     </div>
-                </div> *@
-
-
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label class="control-label">Country</label>
-                            <InputSelect for="CountryId" class="form-control" @bind-Value="studobj.CountryId">
-                                <option value="">Select Country</option>
-                                @foreach (var country in Countries)
-                                {
-                                    <option value="@country.Id">@country.Name</option>
-                                }
-                            </InputSelect>
-                            <ValidationMessage For="() => studobj.CountryId" />
-                        </div>
-                    </div>
                 </div>
-
 
                 <div class="col-md-6">
                     <div class="form-group">

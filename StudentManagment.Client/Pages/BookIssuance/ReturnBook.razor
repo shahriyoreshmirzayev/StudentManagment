@@ -1,4 +1,4 @@
-﻿@page "/bookissuance/edit/{id:int}"
+﻿@page "/return/edit/{id:int}"
 @using StudentManagment.Client.Services;
 @using StudentManagment.Shared.Models;
 @using StudentManagment.Shared.StudentRepository;
@@ -14,11 +14,11 @@
     <div class="col-12">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">Update Parent Details</h3>
+                <h3 class="card-title">Return Book</h3>
             </div>
             <div class="card-body">
                 <div class="col-md-12">
-                    <EditForm Model="bookIssuance" OnValidSubmit="UpdateBookIsssuance" FormName="updatebookissuance">
+                    <EditForm Model="bookIssuance" OnValidSubmit="ReturnBookIsssuance" FormName="returnbookissuance">
                         <DataAnnotationsValidator />
                         <ValidationSummary />
                         <div class="col-md-12">
@@ -85,7 +85,7 @@
 
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label class="control-label">Notes</label>
+                                            <label class="control-label"> Notes</label>
                                             <InputTextArea for="DOB" class="form-control" @bind-Value="@bookIssuance.Notes" />
                                             <ValidationMessage For="()=>bookIssuance.Notes" />
                                         </div>
@@ -122,7 +122,7 @@
         Students = await StudentService.GetAllStudentsAsync();
     }
 
-    protected async Task UpdateBookIsssuance()
+    protected async Task ReturnBookIsssuance()
     {
         var result = await BookIssuanceService.UpdateAsync(bookIssuance);
         navigation.NavigateTo("/bookissuance-list");
