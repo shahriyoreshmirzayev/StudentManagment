@@ -7,6 +7,7 @@ using StudentManagment.Data;
 using StudentManagment.Services;
 using StudentManagment.Shared.StudentRepository;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 
 
@@ -59,6 +60,17 @@ builder.Services.AddScoped(http => new HttpClient
     BaseAddress = new Uri(builder.Configuration.GetSection("BaseAddress").Value!)
 });
 
+
+builder.Services.Configure<CookieAuthenticationOptions>(IdentityConstants.ApplicationScheme, x =>
+{
+    x.Cookie.SameSite = SameSiteMode.None;
+    x.Cookie.Name = "StudentManagment";
+    x.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+});
+builder.Services.AddCors();
+builder.Services.AddAuthentication();
+builder.Services.AddApiAuthorization();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -73,18 +85,16 @@ else
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
-
+app.UseAuthentication();
+app.UseAuthorization();
 app.UseHttpsRedirection();
-
 app.UseStaticFiles();
+app.UseCookiePolicy();
 app.UseAntiforgery();
-
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode()
     .AddInteractiveWebAssemblyRenderMode()
     .AddAdditionalAssemblies(typeof(StudentManagment.Client._Imports).Assembly);
-
 // Add additional endpoints required by the Identity /Account Razor components.
 app.MapAdditionalIdentityEndpoints();
-
 app.Run();
