@@ -27,11 +27,31 @@
             <h2>Create a new account.</h2>
             <hr />
             <ValidationSummary class="text-danger" role="alert" />
+            
+            <div class="form-floating mb-3">
+                <InputText @bind-Value="Input.FirstName" class="form-control" autocomplete="FirstName" aria-required="true" />
+                <label for="email">First Name</label>
+                <ValidationMessage For="() => Input.FirstName" class="text-danger" />
+            </div>
+
+            <div class="form-floating mb-3">
+                <InputText @bind-Value="Input.MiddleName" class="form-control" autocomplete="MiddleName" aria-required="true" />
+                <label for="email">Middle Name</label>
+                <ValidationMessage For="() => Input.MiddleName" class="text-danger" />
+            </div>
+
+            <div class="form-floating mb-3">
+                <InputText @bind-Value="Input.LastName" class="form-control" autocomplete="LastName" aria-required="true" />
+                <label for="email">Last Name</label>
+                <ValidationMessage For="() => Input.LastName" class="text-danger" />
+            </div>
+
             <div class="form-floating mb-3">
                 <InputText @bind-Value="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
                 <label for="email">Email</label>
                 <ValidationMessage For="() => Input.Email" class="text-danger" />
             </div>
+
             <div class="form-floating mb-3">
                 <InputText type="password" @bind-Value="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
                 <label for="password">Password</label>
@@ -130,6 +150,35 @@
         [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; } = "";
+
+        [Required]
+        [Display(Name = "First Name")]
+        public string FirstName { get; set; } = "";
+
+        [Required]
+        [Display(Name = "Middle Name")]
+        public string MiddleName { get; set; } = "";
+
+        [Required]
+        [Display(Name = "Last Name")]
+        public string LastName { get; set; } = "";
+
+        [Required]
+        [Display(Name = "Photo")]
+        public string Photo { get; set; } = ""; 
+
+        [Required]
+        [Display(Name = "Gender")]
+        public int GenderId { get; set; } = 0; 
+
+        public string FullName => $"{FirstName} {MiddleName} {LastName}";
+
+        public bool IsActive { get; set; } = true;
+
+        public DateTime LastActivatyDate { get; set; } = DateTime.UtcNow; 
+
+        public DateTime? DeactivatedOn { get; set; }
+
 
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
