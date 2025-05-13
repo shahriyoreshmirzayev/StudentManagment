@@ -23,12 +23,12 @@ builder.Services.AddScoped<IdentityUserAccessor>();
 builder.Services.AddScoped<IdentityRedirectManager>();
 builder.Services.AddScoped<AuthenticationStateProvider, PersistingRevalidatingAuthenticationStateProvider>();
 
-builder.Services.AddAuthentication(options =>
-    {
-        options.DefaultScheme = IdentityConstants.ApplicationScheme;
-        options.DefaultSignInScheme = IdentityConstants.ExternalScheme;
-    })
-    .AddIdentityCookies();
+//builder.Services.AddAuthentication(options =>
+//    {
+//        options.DefaultScheme = IdentityConstants.ApplicationScheme;
+//        options.DefaultSignInScheme = IdentityConstants.ExternalScheme;
+//    })
+//    .AddIdentityCookies();
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 
@@ -61,15 +61,16 @@ builder.Services.AddScoped(http => new HttpClient
 });
 
 
-builder.Services.Configure<CookieAuthenticationOptions>(IdentityConstants.ApplicationScheme, x =>
+
+/*builder.Services.Configure<CookieAuthenticationOptions>(IdentityConstants.ApplicationScheme, x =>
 {
     x.Cookie.SameSite = SameSiteMode.None;
     x.Cookie.Name = "StudentManagment";
     x.Cookie.SecurePolicy = CookieSecurePolicy.Always;
-});
+});*/
 builder.Services.AddCors();
-builder.Services.AddAuthentication();
-builder.Services.AddApiAuthorization();
+//builder.Services.AddAuthentication();
+//builder.Services.AddApiAuthorization();
 
 var app = builder.Build();
 
@@ -85,10 +86,11 @@ else
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
-app.UseAuthentication();
-app.UseAuthorization();
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+app.UseRouting();
+app.UseAuthentication();
+app.UseAuthorization();
 app.UseCookiePolicy();
 app.UseAntiforgery();
 app.MapRazorComponents<App>()
