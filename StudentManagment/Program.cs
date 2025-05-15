@@ -6,8 +6,6 @@ using StudentManagment.Components.Account;
 using StudentManagment.Data;
 using StudentManagment.Services;
 using StudentManagment.Shared.StudentRepository;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.AspNetCore.Authentication.Cookies;
 
 
 
