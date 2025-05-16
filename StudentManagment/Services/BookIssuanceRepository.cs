@@ -15,61 +15,34 @@ namespace StudentManagment.Services
         }
         public async Task<BookIssuance> AddAsync(BookIssuance mod)
         {
-            if (mod == null) return null;
-
             var issuesstatus = await _context.SystemCodeDetails
                 .Include(x => x.SystemCode)
                 .Where(x => x.SystemCode.Code == "BookIssuanceStatus" && x.Code == "Issued")
                 .FirstOrDefaultAsync();
 
+
             mod.StatusId = issuesstatus.Id;
             mod.CreatedById = "system";
             mod.CreatedOn = DateTime.UtcNow;
-
-            // ✅ Har bir DateTime ni UTC sifatida belgilaymiz
-            mod.IssueDate = DateTime.SpecifyKind(mod.IssueDate, DateTimeKind.Utc);
-            mod.DueDate = DateTime.SpecifyKind(mod.DueDate, DateTimeKind.Utc);
-
-            if (mod.ReturnDate.HasValue)
-                mod.ReturnDate = DateTime.SpecifyKind(mod.ReturnDate.Value, DateTimeKind.Utc);
+            if (mod == null) return null;
 
             var data = _context.BookIssuanceHistory.Add(mod).Entity;
             await _context.SaveChangesAsync();
 
             return data;
-
-            // ishlatilayotgan kod
-            //var issuesstatus = await _context.SystemCodeDetails
-            //    .Include(x => x.SystemCode)
-            //    .Where(x => x.SystemCode.Code == "BookIssuanceStatus" && x.Code == "Issued")
-            //    .FirstOrDefaultAsync();
-
-
-            //mod.StatusId = issuesstatus.Id;
-            //mod.CreatedById = "system";
-            //mod.CreatedOn = DateTime.UtcNow;
             //if (mod == null) return null;
 
-            //var data = _context.BookIssuanceHistory.Add(mod).Entity;
-            //await _context.SaveChangesAsync();
+           /* mod.CreatedById = "system";
+            mod.CreatedOn = DateTime.UtcNow;
 
-            //return data;
+            // DateTime turlarini UTC sifatida belgilash
+            mod.IssueDate = DateTime.SpecifyKind(mod.IssueDate, DateTimeKind.Utc);
+            mod.ReturnDate = DateTime.SpecifyKind(mod.ReturnDate, DateTimeKind.Utc);
 
+            var data = _context.BookIssuanceHistory.Add(mod).Entity;
+            await _context.SaveChangesAsync();
 
-
-            //if (mod == null) return null;
-
-            /* mod.CreatedById = "system";
-             mod.CreatedOn = DateTime.UtcNow;
-
-             // DateTime turlarini UTC sifatida belgilash
-             mod.IssueDate = DateTime.SpecifyKind(mod.IssueDate, DateTimeKind.Utc);
-             mod.ReturnDate = DateTime.SpecifyKind(mod.ReturnDate, DateTimeKind.Utc);
-
-             var data = _context.BookIssuanceHistory.Add(mod).Entity;
-             await _context.SaveChangesAsync();
-
-             return data;*/
+            return data;*/
         }
 
         public async Task<BookIssuance> DeleteAsync(int id)

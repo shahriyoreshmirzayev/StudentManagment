@@ -50,14 +50,14 @@
                                                     <td>@issue.DueDate</td>
                                                     <td>@issue.Class?.Description</td>
                                                     <td>@issue.Student?.FullName</td>
-                                                    <td class="text-warning">@issue.Status.Code</td>
+                                                    <td>@issue.Status.Code</td>
                                                     <td>
                                                         <a class="btn btn-success" href="/issue/edit/@issue.Id">
                                                             <i class="fa-solid fa-pencil"></i> Edit
                                                         </a>
                                                     </td>
                                                     <td>
-                                                        <a class="btn btn-warning" href="/return/edit/@issue.Id">
+                                                        <a class="btn btn-secondary" href="/return/edit/@issue.Id">
                                                             <i class="fa-solid fa-arrow-rotate-left"></i> Return
                                                         </a>
                                                     </td>

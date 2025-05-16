@@ -32,38 +32,10 @@ namespace StudentManagment.Data
                    .WithMany()
                    .HasForeignKey(f => f.CountryId)
                    .OnDelete(DeleteBehavior.Restrict);
+
+
         }
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
-        {
-            foreach (var entry in ChangeTracker.Entries())
-            {
-                if (entry.State == EntityState.Added || entry.State == EntityState.Modified)
-                {
-                    foreach (var property in entry.Properties)
-                    {
-                        if (property.Metadata.ClrType == typeof(DateTime))
-                        {
-                            var dt = (DateTime)property.CurrentValue!;
-                            if (dt.Kind != DateTimeKind.Utc)
-                                property.CurrentValue = DateTime.SpecifyKind(dt, DateTimeKind.Utc);
-                        }
-                        else if (property.Metadata.ClrType == typeof(DateTime?))
-                        {
-                            var nullableDt = (DateTime?)property.CurrentValue;
-                            if (nullableDt.HasValue && nullableDt.Value.Kind != DateTimeKind.Utc)
-                                property.CurrentValue = DateTime.SpecifyKind(nullableDt.Value, DateTimeKind.Utc);
-                        }
-                    }
-                }
-            }
-
-            return base.SaveChangesAsync(cancellationToken);
-        }
-
-
-
-
-        /*public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
             foreach (var entry in ChangeTracker.Entries<Parent>())
             {
@@ -76,7 +48,7 @@ namespace StudentManagment.Data
                 }
             }
             return base.SaveChangesAsync(cancellationToken);
-        }*/
+        }
 
     }
 }
